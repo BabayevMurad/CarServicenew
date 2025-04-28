@@ -10,6 +10,7 @@ namespace CarService.DataAccess.Abstract
     public interface IAppRepository
     {
         Task AddAsync<T>(T entity) where T : class;
+        Task<Cart> AddCartAsync(Cart cart);
         Task DeleteAsync<T>(T entity) where T : class;
         Task<bool> SaveAllAsync();
         Task<List<Detail>> GetAllDetails();

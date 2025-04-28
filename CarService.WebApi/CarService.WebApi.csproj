@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarService.Business\CarService.Business.csproj" />
     <ProjectReference Include="..\CarService.DataAccess\CarService.DataAccess.csproj" />
     <ProjectReference Include="..\CarService.Entities\CarService.Entities.csproj" />
   </ItemGroup>

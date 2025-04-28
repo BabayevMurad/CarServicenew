@@ -27,11 +27,22 @@ namespace CarService.DataAccess.Concrete
             _context.SaveChanges();
         }
 
-        public async void AddCartName(Cart cart)
+        public async Task<Cart> AddCartName(Cart cart)
         {
-            await _appRepository.AddAsync(cart);
+            var cartReturn = await _appRepository.AddCartAsync(cart);
 
             _context.SaveChanges();
+
+            return cartReturn;
+        }
+
+        public Task<List<Cart>> GetCartList()
+        {
+            var cart = _context.Cart
+                .Include(d => d.Details)
+                .ToListAsync();
+
+            return cart;
         }
 
         public Task<Cart> GetCart(int id)

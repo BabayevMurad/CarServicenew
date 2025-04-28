@@ -23,6 +23,13 @@ namespace CarService.DataAccess.Concrete
             await _context.AddAsync<T>(entity);
         }
 
+        public async Task<Cart> AddCartAsync(Cart cart)
+        {
+            var cartReturn = await _context.Cart.AddAsync(cart);
+
+            return cartReturn.Entity;
+        }   
+
         public async Task DeleteAsync<T>(T entity) where T : class
         {
             await Task.Run(() =>

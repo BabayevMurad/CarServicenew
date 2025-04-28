@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarService.Dto_s
+namespace CarService.Entities.Dto_s
 {
-    public class UserForRegisterDto
+    public class BuyCartDto
     {
         #pragma warning disable CS8618
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public Cart Cart { get; set; }
+        public List<CartDetail> CartDetails { get; set; }
         #pragma warning restore CS8618
     }
 }
