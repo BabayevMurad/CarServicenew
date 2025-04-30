@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarService.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,10 @@ namespace CarService.DataAccess.Abstract
 {
     public interface ICarService
     {
-        void CarGenerator();
-        void CarIssueGenerator();
-        void CarGoService();
-        void CarsInService();
+        Car CarGenerator(int userId, string url);
+        Issue CarIssueGenerator();
+        Task<Car> CarGoService(Car car);
+        Task<List<Car>> CarsInService();
 
     }
 }
