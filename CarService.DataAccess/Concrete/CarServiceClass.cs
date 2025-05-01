@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarService.DataAccess.Concrete
 {
-    public class CarService : ICarService
+    public class CarServiceClass : ICarService
     {
         private readonly AppDataContext _appDataContext;
 
-        public CarService(AppDataContext appDataContext)
+        public CarServiceClass(AppDataContext appDataContext)
         {
             _appDataContext = appDataContext;
         }
@@ -19,7 +19,7 @@ namespace CarService.DataAccess.Concrete
             Random random = new Random();
 
             string randomName = name[random.Next(name.Length)];
-            int randomYear = random.Next(1995, 2025);
+            int randomYear = random.Next(2020, 2025);
 
             var car = new Car
             {

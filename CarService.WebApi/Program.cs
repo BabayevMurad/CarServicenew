@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAppRepository, AppRepository>();
+builder.Services.AddScoped<ICarService, CarServiceClass>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 var conn = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<AppDataContext>(option =>
@@ -44,6 +50,7 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
     .AllowAnyOrigin()
     .AllowAnyHeader();
 }));
+
 
 var app = builder.Build();
 

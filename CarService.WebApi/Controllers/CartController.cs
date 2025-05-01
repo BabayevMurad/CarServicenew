@@ -38,9 +38,9 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpGet]
-        public void GetCart()
+        public void GetCart(int id)
         {
-
+            _cartController?.GetCart(id);
         }
     }
 }
