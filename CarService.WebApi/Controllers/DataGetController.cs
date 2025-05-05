@@ -87,6 +87,7 @@ namespace CarService.WebApi.Controllers
             var category = await _appRepository.GetCategory(id);
 
             await _appRepository.DeleteAsync(category);
+
         }
     }
 }
