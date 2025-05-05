@@ -1,5 +1,6 @@
 ﻿using CarService.DataAccess.Abstract;
 using CarService.Entities;
+using CarService.Entities.Dto_s;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarService.WebApi.Controllers
@@ -51,12 +52,41 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpGet("detailByCategory/{id}")]
-        public Task<List<Detail>> DetailByCategory(int id)
+        public async Task<List<Detail>> DetailByCategory(int id)
         {
-            var detail = _appRepository.GetAllDetailsByCategory(id);
+            var detail = await _appRepository.GetAllDetailsByCategory(id);
 
             return detail;
         }
 
+        [HttpPost("AddDetail")]
+        public void AddDetail([FromBody] AddDetailDto detailDto, int count, int categoryId )
+        {
+            detailDto.Count = count;
+            detailDto.CategoryId = categoryId;
+            _appRepository.AddAsync(detailDto);
+        }
+
+        [HttpDelete("DetailDelete")]
+        public async void DeleteDetail(int id)
+        {
+            var detail = await _appRepository.GetDetail(id);
+
+            await _appRepository.DeleteAsync(detail);
+        }
+
+        [HttpPost("AddCategory")]
+        public async void AddCategory([FromBody] AddCategoryDto addCategory)
+        {
+            await _appRepository.AddAsync(addCategory);
+        }
+
+        [HttpDelete("CategoryDelete")]
+        public async void CategoryDelite(int id)
+        {
+            var category = await _appRepository.GetCategory(id);
+
+            await _appRepository.DeleteAsync(category);
+        }
     }
 }
