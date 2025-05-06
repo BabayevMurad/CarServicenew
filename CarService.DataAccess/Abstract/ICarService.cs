@@ -13,6 +13,7 @@ namespace CarService.DataAccess.Abstract
         Issue CarIssueGenerator();
         Task<Car> CarGoService(Car car);
         Task<List<Car>> CarsInService();
+        Task RemoveCarFromSevice(int id);
 
     }
 }

@@ -7,10 +7,13 @@ namespace CarService.DataAccess.Concrete
     public class CarServiceClass : ICarService
     {
         private readonly AppDataContext _appDataContext;
+        private readonly IAppRepository _appRepository;
 
-        public CarServiceClass(AppDataContext appDataContext)
+
+        public CarServiceClass(AppDataContext appDataContext, IAppRepository appRepository)
         {
             _appDataContext = appDataContext;
+            _appRepository = appRepository;
         }
 
         public Car CarGenerator(int userId, string url)
@@ -72,6 +75,13 @@ namespace CarService.DataAccess.Concrete
             var cars = await _appDataContext.Cars.ToListAsync();
 
             return cars;
+        }
+
+        public Task RemoveCarFromSevice(int id) 
+        {
+            var task = _appRepository.DeleteAsync(_appDataContext.Cars.FirstOrDefault(c => c.Id == id));
+
+            return task;
         }
     }
 }

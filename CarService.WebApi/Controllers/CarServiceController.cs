@@ -44,16 +44,17 @@ namespace CarService.WebApi.Controllers
         }
 
         // POST api/<CarServiceController>
-        [HttpPost]
+        [HttpPost("CarToService")]
         public void CarToService(Car car)
         {
             _carService.CarGoService(car);
         }
 
         // DELETE api/<CarServiceController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("RemoveCarFromService/{id}")]
+        public void RemoveCarFromService(int id)
         {
+            _carService.RemoveCarFromSevice(id);
         }
     }
 }

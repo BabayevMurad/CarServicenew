@@ -81,7 +81,7 @@ namespace CarService.WebApi.Controllers
             await _appRepository.AddAsync(addCategory);
         }
 
-        [HttpDelete("CategoryDelete")]
+        [HttpDelete("CategoryDelete/{id}")]
         public async void CategoryDelite(int id)
         {
             var category = await _appRepository.GetCategory(id);
