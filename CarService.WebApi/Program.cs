@@ -5,8 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Configuration;
-using System;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
