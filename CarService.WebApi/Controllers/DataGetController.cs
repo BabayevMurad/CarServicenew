@@ -63,7 +63,7 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpPost("AddDetail")]
-        public async void AddDetail([FromBody] AddDetailDto detailDto, int count, int categoryId )
+        public async Task AddDetail([FromBody] AddDetailDto detailDto, int count, int categoryId )
         {
             detailDto.Count = count;
             detailDto.CategoryId = categoryId;
@@ -73,13 +73,15 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpDelete("DetailDelete/{id}")]
-        public async void DeleteDetail(int id)
+        public async Task DeleteDetail(int id)
         {
             var detail = await _appRepository.GetDetail(id);
 
             await _appRepository.DeleteAsync(detail);
 
             await _appRepository.SaveAllAsync();
+
+
         }
 
         [HttpPost("AddCategory")]
