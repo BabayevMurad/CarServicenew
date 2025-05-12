@@ -3,6 +3,7 @@ using CarService.DataAccess.Abstract;
 using CarService.Entities;
 using CarService.Entities.Dto_s;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Validations;
 
 namespace CarService.WebApi.Controllers
 {
@@ -63,18 +64,18 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpPost("adddetail")]
-        public async Task AddDetail([FromBody] AddDetailDto detailDto, int count, int categoryId)
+        public async Task AddDetail([FromBody] AddDetailDto detailDto)
         {
             var detail = new Detail
             {
                 Name = detailDto.Name,
                 Price = detailDto.Price,
                 ImageUrl = detailDto.ImageUrl,
-                Count = count,
-                CategoryId = categoryId
+                Count = detailDto.Count,
+                CategoryId = detailDto.CategoryId,
             };
 
-            await _appRepository.AddAsync(detailDto);
+            await _appRepository.AddAsync(detail);
 
             await _appDataContext.SaveChangesAsync();
         }
@@ -92,7 +93,12 @@ namespace CarService.WebApi.Controllers
         [HttpPost("AddCategory")]
         public async Task AddCategory([FromBody] AddCategoryDto addCategory)
         {
-            await _appRepository.AddAsync(addCategory);
+            var category = new Category
+            {
+                Name = addCategory.Name,
+            };
+
+            await _appRepository.AddAsync(category);
 
             await _appDataContext.SaveChangesAsync();       
         }
