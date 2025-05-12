@@ -1,4 +1,5 @@
-﻿using CarService.DataAccess.Abstract;
+﻿using CarService.DataAccess;
+using CarService.DataAccess.Abstract;
 using CarService.Entities;
 using CarService.Entities.Dto_s;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace CarService.WebApi.Controllers
     {
 
         private readonly IAppRepository _appRepository;
+        private readonly AppDataContext _appDataContext;
 
-        public DataGetController(IAppRepository appRepository)
+        public DataGetController(IAppRepository appRepository, AppDataContext appDataContext)
         {
             _appRepository = appRepository;
+            _appDataContext = appDataContext;
         }
 
         [HttpGet("categorylist")]
@@ -79,6 +82,8 @@ namespace CarService.WebApi.Controllers
         public async void AddCategory([FromBody] AddCategoryDto addCategory)
         {
             await _appRepository.AddAsync(addCategory);
+
+            await _appDataContext.SaveChangesAsync();
         }
 
         [HttpDelete("CategoryDelete/{id}")]
@@ -88,6 +93,7 @@ namespace CarService.WebApi.Controllers
 
             await _appRepository.DeleteAsync(category);
 
+            await _appDataContext.SaveChangesAsync();
         }
     }
 }

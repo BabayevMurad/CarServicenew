@@ -23,7 +23,7 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpPost]
-        public void AddCart([FromBody] BuyCartDto BuyCart)
+        public async void AddCart([FromBody] BuyCartDto BuyCart)
         {
             var cart = _cartController.AddCartName(BuyCart.Cart);
 
@@ -34,7 +34,7 @@ namespace CarService.WebApi.Controllers
 
             _cartController.AddCart(BuyCart.CartDetails);
 
-            _appDataContext.SaveChanges();
+            await _appDataContext.SaveChangesAsync();
         }
 
         [HttpGet]
