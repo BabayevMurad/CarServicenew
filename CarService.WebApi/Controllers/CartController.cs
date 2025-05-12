@@ -23,7 +23,7 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpPost]
-        public async void AddCart([FromBody] BuyCartDto BuyCart)
+        public async Task AddCart([FromBody] BuyCartDto BuyCart)
         {
             var cart = _cartController.AddCartName(BuyCart.Cart);
 
@@ -38,9 +38,9 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpGet]
-        public void GetCart(int id)
+        public Task<Cart> GetCart(int id)
         {
-            _cartController?.GetCart(id);
+            return _cartController?.GetCart(id);
         }
     }
 }

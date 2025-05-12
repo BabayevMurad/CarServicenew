@@ -69,35 +69,35 @@ namespace CarService.WebApi.Controllers
             detailDto.CategoryId = categoryId;
             _appRepository.AddAsync(detailDto);
 
-            await _appDataContext.SaveChangesAsync();
+            await _appRepository.SaveAllAsync();
         }
 
-        [HttpDelete("DetailDelete")]
+        [HttpDelete("DetailDelete/{id}")]
         public async void DeleteDetail(int id)
         {
             var detail = await _appRepository.GetDetail(id);
 
             await _appRepository.DeleteAsync(detail);
 
-            await _appDataContext.SaveChangesAsync();
+            await _appRepository.SaveAllAsync();
         }
 
         [HttpPost("AddCategory")]
-        public async void AddCategory([FromBody] AddCategoryDto addCategory)
+        public async Task AddCategory([FromBody] AddCategoryDto addCategory)
         {
             await _appRepository.AddAsync(addCategory);
 
-            await _appDataContext.SaveChangesAsync();
+            await _appRepository.SaveAllAsync();
         }
 
         [HttpDelete("CategoryDelete/{id}")]
-        public async void CategoryDelite(int id)
+        public async Task CategoryDelite(int id)
         {
             var category = await _appRepository.GetCategory(id);
 
             await _appRepository.DeleteAsync(category);
 
-            await _appDataContext.SaveChangesAsync();
+            await _appRepository.SaveAllAsync();
         }
     }
 }
