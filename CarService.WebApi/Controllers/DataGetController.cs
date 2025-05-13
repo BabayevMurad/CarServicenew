@@ -110,7 +110,7 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpPost("AddCategory")]
-        public async Task AddCategory([FromBody] AddCategoryDto addCategory)
+        public async Task<IActionResult> AddCategory([FromBody] AddCategoryDto addCategory)
         {
             var category = new Category
             {
@@ -119,7 +119,9 @@ namespace CarService.WebApi.Controllers
 
             await _appRepository.AddAsync(category);
 
-            await _appDataContext.SaveChangesAsync();       
+            await _appDataContext.SaveChangesAsync();
+
+            return Ok();
         }
 
         [HttpDelete("CategoryDelete/{id}")]
