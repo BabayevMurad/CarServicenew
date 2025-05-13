@@ -90,6 +90,25 @@ namespace CarService.WebApi.Controllers
             await _appRepository.SaveAllAsync();
         }
 
+        [HttpPost("DetailEdit")]
+        public async Task<IActionResult> EditDetail([FromBody] AddDetailDto detailDto, int id)
+        {
+            var detail = new Detail
+            {
+                Name = detailDto.Name,
+                Price = detailDto.Price,
+                ImageUrl = detailDto.ImageUrl,
+                Count = detailDto.Count,
+                CategoryId = detailDto.CategoryId,
+            };
+
+            await _appRepository.EditDetail(detail, id);
+
+            await _appDataContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
         [HttpPost("AddCategory")]
         public async Task AddCategory([FromBody] AddCategoryDto addCategory)
         {

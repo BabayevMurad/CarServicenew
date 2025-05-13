@@ -83,5 +83,20 @@ namespace CarService.DataAccess.Concrete
         {
             return (await _context.SaveChangesAsync()) > 0;
         }
+
+        public async Task<Detail> EditDetail(Detail detailNew,int id)
+        {
+            var detail = await _context.Details.FirstOrDefaultAsync(d => d.Id == id);
+
+            detail.Count = detailNew.Count;
+            detail.ImageUrl = detailNew.ImageUrl;
+            detail.Name = detailNew.Name;
+            detail.Price = detailNew.Price;
+            detail.CategoryId = detailNew.CategoryId;
+
+            await _context.SaveChangesAsync();
+
+            return detail;
+        }
     }
 }

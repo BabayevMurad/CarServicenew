@@ -14,5 +14,6 @@ namespace CarService.DataAccess.Abstract
         Task<Detail> GetDetail(int id);
         Task<List<Category>> GetAllCategory();
         Task<Category> GetCategory(int id);
+        Task<Detail> EditDetail(Detail detailNew, int id);
     }
 }
