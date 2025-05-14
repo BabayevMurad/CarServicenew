@@ -9,6 +9,7 @@
         #pragma warning restore CS8618
         public decimal Price { get; set; }
         public int CartId { get; set; }
+        public int DetailId { get; set; }
         public int Count { get; set; }
     }
 }

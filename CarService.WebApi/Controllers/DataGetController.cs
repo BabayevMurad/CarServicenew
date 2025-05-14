@@ -24,7 +24,6 @@ namespace CarService.WebApi.Controllers
         [HttpGet("categorylist")]
         public Task<List<Category>> GetCategoryList()
         {
-
             var categories = _appRepository.GetAllCategory();
 
             return categories;

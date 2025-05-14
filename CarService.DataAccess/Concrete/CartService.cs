@@ -17,23 +17,36 @@ namespace CarService.DataAccess.Concrete
             _context = context;
         }
 
-        public async void AddCart(List<CartDetail> details)
+        public async Task DecreaseDetailCount(List<CartDetail> cartDetails, int id)
         {
-            foreach (var item in details)
+            foreach (var item in cartDetails)
             {
-                await _appRepository.AddAsync(details);
+                var detail = await _context.Details.FirstOrDefaultAsync(d => d.Id == item.DetailId);
+
+                detail.Count -= item.Count;
+
+                item.CartId = id;
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Cart> AddCartName(Cart cart)
         {
             var cartReturn = await _appRepository.AddCartAsync(cart);
 
-            _context.SaveChanges();
-
             return cartReturn;
+        }
+
+        public async Task<Cart> EditCartDetails(int cartId,List<CartDetail> cartDetails)
+        {
+            var cart = await GetCart(cartId);
+
+            cart.Details = cartDetails;
+
+            await _context.SaveChangesAsync();
+
+            return cart;
         }
 
         public Task<List<Cart>> GetCartList()

@@ -3,6 +3,7 @@ using CarService.Entities;
 using Microsoft.AspNetCore.Mvc;
 using CarService.DataAccess.Abstract;
 using CarService.Entities.Dto_s;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,25 +23,24 @@ namespace CarService.WebApi.Controllers
             _appDataContext = appDataContext;
         }
 
-        [HttpPost]
-        public async Task AddCart([FromBody] BuyCartDto BuyCart)
+        [HttpPost("AddCart")]
+        public async Task<ActionResult> AddCart([FromBody] BuyCartDto buycart)
         {
-            var cart = _cartController.AddCartName(BuyCart.Cart);
+            var cartAdd = await _cartController.AddCartName(buycart.Cart);
 
-            foreach(CartDetail i in BuyCart.CartDetails)
-            {
-                i.CartId = cart.Id;
-            }
+            cartAdd.Time = DateTime.Now;
 
-            _cartController.AddCart(BuyCart.CartDetails);
+            await _cartController.DecreaseDetailCount(buycart.Cart.Details, cartAdd.Id);
 
-            await _appDataContext.SaveChangesAsync();
+            await _cartController.EditCartDetails(cartAdd.Id, buycart.Cart.Details);
+
+            return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("GetCart")]
         public Task<Cart> GetCart(int id)
         {
-            return _cartController?.GetCart(id);
+            return _cartController.GetCart(id);
         }
     }
 }

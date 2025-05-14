@@ -22,6 +22,8 @@ namespace CarService.DataAccess.Concrete
         {
             var cartReturn = await _context.Cart.AddAsync(cart);
 
+            await _context.SaveChangesAsync();
+
             return cartReturn.Entity;
         }   
 

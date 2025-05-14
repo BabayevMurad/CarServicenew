@@ -4,9 +4,10 @@ namespace CarService.DataAccess.Abstract
 {
     public interface ICartService
     {
-        void AddCart(List<CartDetail> details);
         Task<Cart> GetCart(int id);
         Task<Cart> AddCartName(Cart cart);
         Task<List<Cart>> GetCartList();
+        Task DecreaseDetailCount(List<CartDetail> cartDetails, int id);
+        Task<Cart> EditCartDetails(int cartId, List<CartDetail> cartDetails);
     }
 }
