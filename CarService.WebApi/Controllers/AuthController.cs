@@ -45,28 +45,28 @@ namespace CarService.WebApi.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        [HttpPost("registerAdmin")]
-        public async Task<ActionResult> RegisterAdmin([FromBody] UserForRegisterDto dto)
-        {
-            if (await _authRepository.UserExists(dto.Username))
-            {
-                ModelState.AddModelError("Username", "Username already exist");
-            }
+        //[HttpPost("registerAdmin")]
+        //public async Task<ActionResult> RegisterAdmin([FromBody] UserForRegisterDto dto)
+        //{
+        //    if (await _authRepository.UserExists(dto.Username))
+        //    {
+        //        ModelState.AddModelError("Username", "Username already exist");
+        //    }
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var userToCreate = new User
-            {
-                Username = dto.Username,
-            };
+        //    var userToCreate = new User
+        //    {
+        //        Username = dto.Username,
+        //    };
 
-            await _authRepository.Register(userToCreate, dto.Password);
+        //    await _authRepository.Register(userToCreate, dto.Password);
 
-            return StatusCode(StatusCodes.Status201Created);
-        }
+        //    return StatusCode(StatusCodes.Status201Created);
+        //}
 
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] UserForLoginDto dto)

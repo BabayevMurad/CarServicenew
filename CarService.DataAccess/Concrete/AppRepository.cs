@@ -37,7 +37,6 @@ namespace CarService.DataAccess.Concrete
         {
             var details = await _context
                  .Category
-                 .Include(c => c.Details)
                  .ToListAsync();
 
             return details;
@@ -97,6 +96,17 @@ namespace CarService.DataAccess.Concrete
             await _context.SaveChangesAsync();
 
             return detail;
+        }
+
+        public async Task<Category> EditCategory(Category categoryNew, int id)
+        {
+            var category = await _context.Category.FirstOrDefaultAsync(c => c.Id == id);
+
+            category.Name = categoryNew.Name;
+
+            await _context.SaveChangesAsync();
+
+            return category;
         }
     }
 }
