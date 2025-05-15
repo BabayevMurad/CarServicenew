@@ -39,5 +39,12 @@ namespace CarService.WebApi.Controllers
         {
             return _cartController.GetCart(id);
         }
+
+        [HttpGet("GetAllCarts")]
+        public async Task<ActionResult<List<Cart>>> GetAllCarts()
+        {
+            var carts = await _cartController.GetCartList();
+            return Ok(carts);
+        }
     }
 }

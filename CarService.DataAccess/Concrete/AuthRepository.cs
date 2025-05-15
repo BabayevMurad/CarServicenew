@@ -15,6 +15,17 @@ namespace CarService.DataAccess.Concrete
             _context = context;
         }
 
+        public async Task<Admin> AdminLogin(string username, string password)
+        {
+            var admin = await _context.Admins.FirstOrDefaultAsync(x => x.Username == username);
+            if (admin is null) return null!;
+            if (!VerifyPasswordHash(password, admin.PasswordHash, admin.PasswordSalt))
+            {
+                return null!;
+            }
+            return admin;
+        }
+
         public async Task<User> Login(string username, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
@@ -47,6 +58,17 @@ namespace CarService.DataAccess.Concrete
             return user;
         }
 
+        public async Task<Admin> Register(Admin admin, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            admin.PasswordHash = passwordHash;
+            admin.PasswordSalt = passwordSalt;
+            await _context.Admins.AddAsync(admin);
+            await _context.SaveChangesAsync();
+            return admin;
+        }
+
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using (var hmac = new HMACSHA512())
@@ -62,6 +84,14 @@ namespace CarService.DataAccess.Concrete
                 .Users
                 .AnyAsync(u => u.Username == username);
 
+            return hasExist;
+        }
+
+        public async Task<bool> AdminExists(string username)
+        {
+            var hasExist = await _context
+                .Admins
+                .AnyAsync(u => u.Username == username);
             return hasExist;
         }
     }

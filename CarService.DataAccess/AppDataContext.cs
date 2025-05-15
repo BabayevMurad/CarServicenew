@@ -11,6 +11,7 @@ namespace CarService.DataAccess
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Detail> Details { get; set; }
         public DbSet<Cart> Cart { get; set; }

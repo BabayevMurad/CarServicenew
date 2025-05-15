@@ -42,10 +42,21 @@ namespace CarService.DataAccess.Concrete
             return carReturn.Entity;
         }
 
-        public Issue CarIssueGenerator()
+        public async Task<Issue> CarIssueGenerator()
+        {
+            var issues = await _appDataContext.Issues.ToListAsync();
+
+            Random random = new Random();
+
+            var randomName = issues[random.Next(issues.ToArray().Length)-1];
+
+            return randomName;
+        }
+
+        public async Task AddIssueToSql()
         {
             List<Issue> list = new List<Issue>
-            {                                                                                 
+            {
                 new Issue { Level= "Easy"         , Problem= "Flat Tire"             , Description= "The tire loses air pressure and needs replacement."          },
                 new Issue { Level= "Easy"         , Problem= "Oil Change"            , Description= "The engine oil needs to be changed regularly."               },
                 new Issue { Level= "Easy"         , Problem= "Air Filter Replacement", Description= "The air filter is dirty and needs replacement."              },
@@ -64,11 +75,14 @@ namespace CarService.DataAccess.Concrete
                 new Issue { Level= "Cant't Repair", Problem= "You By Old Bmw"        , Description= "This Car Never Repaired."                                    },
             };
 
-            Random random = new Random();
-
-            var randomName = list[random.Next(list.ToArray().Length)-1];
-
-            return randomName;
+            foreach (var item in list)
+            {
+                var issue = await _appDataContext.Issues.FirstOrDefaultAsync(i => i.Problem == item.Problem);
+                if (issue is null)
+                {
+                    await _appDataContext.Issues.AddAsync(item);
+                }
+            }
         }
 
         public async Task<List<Car>> CarsInService()

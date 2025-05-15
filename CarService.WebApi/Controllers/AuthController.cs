@@ -94,7 +94,12 @@ namespace CarService.WebApi.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
-            return Ok(tokenString);
+            return Ok(new
+            {
+                token = tokenString,
+                id = user.Id,
+                username = user.Username
+            });
         }
     }
 }
