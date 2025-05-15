@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarService.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class DateEdit : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -91,7 +91,7 @@ namespace CarService.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false),
                     CartId = table.Column<int>(type: "int", nullable: false),
@@ -132,6 +132,43 @@ namespace CarService.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CarsRepair",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CarId = table.Column<int>(type: "int", nullable: false),
+                    IssueId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarsRepair", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CarsRepair_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CarsRepair_Issues_IssueId",
+                        column: x => x.IssueId,
+                        principalTable: "Issues",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarsRepair_CarId",
+                table: "CarsRepair",
+                column: "CarId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CarsRepair_IssueId",
+                table: "CarsRepair",
+                column: "IssueId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_CartDetails_CartId",
                 table: "CartDetails",
@@ -147,7 +184,7 @@ namespace CarService.DataAccess.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cars");
+                name: "CarsRepair");
 
             migrationBuilder.DropTable(
                 name: "CartDetails");
@@ -156,10 +193,13 @@ namespace CarService.DataAccess.Migrations
                 name: "Details");
 
             migrationBuilder.DropTable(
-                name: "Issues");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Cars");
+
+            migrationBuilder.DropTable(
+                name: "Issues");
 
             migrationBuilder.DropTable(
                 name: "Cart");

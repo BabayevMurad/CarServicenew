@@ -16,6 +16,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var conn = builder.Configuration.GetConnectionString("Default");
+builder.Services.AddDbContext<AppDataContext>(option =>
+{
+    option.UseSqlServer(conn);
+});
+
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAppRepository, AppRepository>();
 builder.Services.AddScoped<ICarService, CarServiceClass>();
@@ -23,11 +29,6 @@ builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 
-var conn = builder.Configuration.GetConnectionString("Default");
-builder.Services.AddDbContext<AppDataContext>(option =>
-{
-    option.UseSqlServer(conn);
-});
 
 var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value);
 

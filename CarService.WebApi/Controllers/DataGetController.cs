@@ -13,12 +13,10 @@ namespace CarService.WebApi.Controllers
     {
 
         private readonly IAppRepository _appRepository;
-        private readonly AppDataContext _appDataContext;
 
-        public DataGetController(IAppRepository appRepository, AppDataContext appDataContext)
+        public DataGetController(IAppRepository appRepository)
         {
             _appRepository = appRepository;
-            _appDataContext = appDataContext;
         }
 
         [HttpGet("categorylist")]
@@ -76,7 +74,7 @@ namespace CarService.WebApi.Controllers
 
             await _appRepository.AddAsync(detail);
 
-            await _appDataContext.SaveChangesAsync();
+            await _appRepository.SaveAllAsync();
         }
 
         [HttpDelete("DetailDelete/{id}")]
@@ -103,7 +101,7 @@ namespace CarService.WebApi.Controllers
 
             await _appRepository.EditDetail(detail, id);
 
-            await _appDataContext.SaveChangesAsync();
+            await _appRepository.SaveAllAsync();
 
             return Ok();
         }
@@ -118,7 +116,7 @@ namespace CarService.WebApi.Controllers
 
             await _appRepository.AddAsync(category);
 
-            await _appDataContext.SaveChangesAsync();
+            await _appRepository.SaveAllAsync();
 
             return Ok();
         }
@@ -143,7 +141,7 @@ namespace CarService.WebApi.Controllers
 
             await _appRepository.EditCategory(category, id);
 
-            await _appDataContext.SaveChangesAsync();
+            await _appRepository.SaveAllAsync();
 
             return Ok();
         }

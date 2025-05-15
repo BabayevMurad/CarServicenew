@@ -12,7 +12,18 @@ namespace CarService.DataAccess.Concrete
             _context = context;
         }
 
-        public async void AddUserMoney(int userId, decimal money)
+        public async Task<decimal> GetUserMoney(int userId)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            if (user is not null)
+            {
+                return user.Money;
+            }
+            return -1;
+        }
+
+        public async Task<decimal> AddUserMoney(int userId, decimal money)
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Id == userId);
@@ -25,9 +36,11 @@ namespace CarService.DataAccess.Concrete
 
                 await _context.SaveChangesAsync();
             }
+
+            return user.Money;
         }
 
-        public async void UserPay(int userId, decimal money)
+        public async Task<decimal> UserPay(int userId, decimal money)
         {
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Id == userId);
@@ -42,8 +55,9 @@ namespace CarService.DataAccess.Concrete
 
                     await _context.SaveChangesAsync();
                 }
-
             }
+
+            return user.Money;
         }
     }
 }

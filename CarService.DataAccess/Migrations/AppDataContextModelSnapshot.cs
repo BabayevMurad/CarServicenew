@@ -49,6 +49,32 @@ namespace CarService.DataAccess.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("CarService.Entities.CarRepair", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IssueId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("IssueId");
+
+                    b.ToTable("CarsRepair");
+                });
+
             modelBuilder.Entity("CarService.Entities.Cart", b =>
                 {
                     b.Property<int>("Id")
@@ -89,11 +115,12 @@ namespace CarService.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("DECIMAL(18,2)");
-
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -200,6 +227,25 @@ namespace CarService.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("CarService.Entities.CarRepair", b =>
+                {
+                    b.HasOne("CarService.Entities.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CarService.Entities.Issue", "Issue")
+                        .WithMany()
+                        .HasForeignKey("IssueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
+
+                    b.Navigation("Issue");
                 });
 
             modelBuilder.Entity("CarService.Entities.CartDetail", b =>

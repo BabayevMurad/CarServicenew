@@ -15,12 +15,9 @@ namespace CarService.WebApi.Controllers
     {
         private readonly ICartService _cartController;
 
-        private readonly AppDataContext _appDataContext;
-
-        public CartController(ICartService cartController, AppDataContext appDataContext)
+        public CartController(ICartService cartController)
         {
             _cartController = cartController;
-            _appDataContext = appDataContext;
         }
 
         [HttpPost("AddCart")]

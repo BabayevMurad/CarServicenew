@@ -2,7 +2,8 @@
 {
     public interface IUserService
     {
-        public void AddUserMoney(int userId, decimal money);
-        public void UserPay(int userId, decimal money);
+        public Task<decimal> AddUserMoney(int userId, decimal money);
+        public Task<decimal> UserPay(int userId, decimal money);
+        public Task<decimal> GetUserMoney(int userId);
     }
 }
