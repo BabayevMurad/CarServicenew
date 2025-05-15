@@ -79,7 +79,6 @@ namespace CarService.DataAccess.Concrete
                 new Issue { Level= "Difficult"    , Problem= "Timing Belt Failure"   , Description= "Timing belt has broken and engine synchronization is lost."  },
                 new Issue { Level= "Difficult"    , Problem= "Fuel Pump Failure"     , Description= "Fuel pump has failed, causing fuel delivery issues."         },
                 new Issue { Level= "Difficult"    , Problem= "Clutch System Failure" , Description= "Clutch has completely failed and needs full replacement."    },
-                new Issue { Level= "Cant't Repair", Problem= "You Buy Old Bmw"        , Description= "This Car Never Repaired."                                    },
             };
 
             foreach (var item in list)
