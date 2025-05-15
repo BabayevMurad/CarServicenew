@@ -9,7 +9,6 @@ namespace CarService.DataAccess.Concrete
         private readonly AppDataContext _appDataContext;
         private readonly IAppRepository _appRepository;
 
-
         public CarServiceClass(AppDataContext appDataContext, IAppRepository appRepository)
         {
             _appDataContext = appDataContext;
@@ -18,21 +17,29 @@ namespace CarService.DataAccess.Concrete
 
         public async Task<Car> CarGenerator(int userId)
         {
-            var name = await _appDataContext.Cars.ToListAsync();
+            var carIds = await _appDataContext.Cars.Select(c => c.Id).ToListAsync();
+
+            if (carIds.Count == 0)
+                return null;
+
             Random random = new Random();
- 
-            string randomName = name[random.Next(name.Count)].Name;
-            int randomYear = random.Next(2020, 2025);
+            int randomId = carIds[random.Next(carIds.Count)];
+
+            var selectedCar = await _appDataContext.Cars.FirstOrDefaultAsync(c => c.Id == randomId);
+
+            int randomYear = new Random().Next(2020, 2025);
 
             var car = new Car
             {
-                Name = randomName,
+                Name = selectedCar.Name,
                 Year = randomYear,
                 UserId = userId,
+                imageUrl = selectedCar.imageUrl
             };
 
             return car;
         }
+
 
         public async Task<Car> CarGoService(Car car)
         {
@@ -43,13 +50,13 @@ namespace CarService.DataAccess.Concrete
 
         public async Task<Issue> CarIssueGenerator()
         {
-            var issues = await _appDataContext.Issues.ToListAsync();
-
+            var issueCount = await _appDataContext.Issues.CountAsync();
             Random random = new Random();
+            int randomId = random.Next(1, issueCount + 1);
 
-            var randomName = issues[random.Next(issues.ToArray().Length)-1];
+            var issue = await _appDataContext.Issues.FirstOrDefaultAsync(i => i.Id == randomId);
 
-            return randomName;
+            return issue;
         }
 
         public async Task AddIssueToSql()
@@ -106,7 +113,7 @@ namespace CarService.DataAccess.Concrete
             return cars;
         }
 
-        public Task RemoveCarFromSevice(int id) 
+        public Task RemoveCarFromSevice(int id)
         {
             var task = _appRepository.DeleteAsync(_appDataContext.Cars.FirstOrDefault(c => c.Id == id));
 
