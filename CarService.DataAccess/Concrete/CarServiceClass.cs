@@ -42,9 +42,9 @@ namespace CarService.DataAccess.Concrete
         }
 
 
-        public async Task<Car> CarGoService(Car car)
+        public async Task<CarRepair> CarGoService(CarRepair car)
         {
-            var carReturn = await _appDataContext.Cars.AddAsync(car);
+            var carReturn = await _appDataContext.CarsRepair.AddAsync(car);
 
             return carReturn.Entity;
         }
