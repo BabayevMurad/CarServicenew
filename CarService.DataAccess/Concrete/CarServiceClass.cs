@@ -31,6 +31,7 @@ namespace CarService.DataAccess.Concrete
 
             var car = new Car
             {
+                Id = selectedCar.Id,
                 Name = selectedCar.Name,
                 Year = randomYear,
                 UserId = userId,
@@ -93,10 +94,10 @@ namespace CarService.DataAccess.Concrete
         {
             List<Car> list = new List<Car>
             {
-                new Car { Name= "Toyota Corolla"         , Year= 2020, imageUrl= "https://cdn.pixabay.com/photo/2015/10/12/15/00/car-984011_1280.jpg" },
-                new Car { Name= "Toyota Land Cruiser 200" , Year= 2021, imageUrl= "https://cdn.pixabay.com/photo/2016/11/29/09/08/car-1867184_1280.jpg" },
-                new Car { Name= "Mercedes Benz Brabus 6.5S", Year= 2023, imageUrl= "https://cdn.pixabay.com/photo/2016/11/29/09/08/car-1867184_1280.jpg" },
-                new Car { Name= "BMW X5 GPower"          , Year= 2025, imageUrl= "https://cdn.pixabay.com/photo/2016/11/29/09/08/car-1867184_1280.jpg" }
+                new Car { Name= "Toyota Corolla", Year= 2020, imageUrl= "/images/Toyota-Corolla.jpg" },
+                new Car { Name= "Mercedes A-Class", Year= 2021, imageUrl= "/images/Mercedes-A-Class.jpg" },
+                new Car { Name= "Audi A4", Year= 2023, imageUrl= "/images/Audi-A4.jpg" },
+                new Car { Name= "BMW X5", Year= 2025, imageUrl= "/images/BMW-X5.jpg" }
             };
             foreach (var item in list)
             {
