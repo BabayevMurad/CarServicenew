@@ -10,8 +10,8 @@ namespace CarService.DataAccess.Abstract
     public interface IService
     {
         Task<Car> GetCarForRepair();
-        Task GetCarIssue(int carId);
+        Task<Issue> GetCarIssue(int carId);
         Task CarRepairAndAddtoStock(int carId);
-        Task<decimal> GetRepairPrice(Issue issue);        
+        decimal GetRepairPrice(Issue issue);        
     }
 }

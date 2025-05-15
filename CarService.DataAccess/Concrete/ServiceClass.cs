@@ -1,5 +1,6 @@
 ﻿using CarService.DataAccess.Abstract;
 using CarService.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,24 +11,63 @@ namespace CarService.DataAccess.Concrete
 {
     public class ServiceClass : IService
     {
-        public Task CarRepairAndAddtoStock(int carId)
+        private readonly AppDataContext _context;
+
+        public ServiceClass(AppDataContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task GetCarIssue(int carId)
+        public async Task CarRepairAndAddtoStock(int carRepairId)
         {
-            throw new NotImplementedException();
+            var carRepair = await _context.CarsRepair.FirstOrDefaultAsync(c => c.Id == carRepairId);
+
+            _context.RepairHistories.Add(new RepairHistory
+            {
+                CarId = carRepair.CarId,
+                RepairDate = DateTime.Now,
+                Cost = GetRepairPrice(carRepair.Issue)
+            });
+
+            _context.CarsRepair.Remove(carRepair);
         }
 
-        public Task<Car> GetCarForRepair()
+        public async Task<Issue> GetCarIssue(int carId)
         {
-            throw new NotImplementedException();
+            var issue = await _context.CarsRepair
+                    .Include(c => c.Issue)
+                    .FirstOrDefaultAsync(c => c.CarId == carId);
+
+            return issue.Issue;
         }
 
-        public Task<decimal> GetRepairPrice(Issue issue)
+        public async Task<Car> GetCarForRepair()
         {
-            throw new NotImplementedException();
+            var car = await _context.CarsRepair.
+                Include(c => c.Car)
+                .FirstAsync();
+
+            return car.Car;
+        }
+
+        public decimal GetRepairPrice(Issue issue)
+        {
+            if (issue.Level == "Medium")
+            {
+                return (decimal)160;
+            }
+            else if (issue.Level == "Difficult")
+            {
+                return (decimal)270;
+            }
+            else if (issue.Level == "Cant't Repair")
+            {
+                return (decimal)999999999999999;
+            }
+            else
+            {
+                return (decimal)0;
+            }
         }
     }
 }

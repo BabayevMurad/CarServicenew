@@ -18,6 +18,7 @@ namespace CarService.DataAccess
         public DbSet<Issue> Issues { get; set; }
         public DbSet<CartDetail> CartDetails { get; set; }
         public DbSet<CarRepair> CarsRepair { get; set; }
+        public DbSet<RepairHistory> RepairHistories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,6 +34,10 @@ namespace CarService.DataAccess
             modelBuilder.Entity<User>()
               .Property(d => d.Money)
               .HasColumnType("DECIMAL(18,2)");
+
+            modelBuilder.Entity<RepairHistory>()
+                .Property(r => r.Cost)
+                .HasColumnType("DECIMAL(18,2)");
         }
     }
 }

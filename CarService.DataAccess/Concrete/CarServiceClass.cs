@@ -66,7 +66,7 @@ namespace CarService.DataAccess.Concrete
 
             Random random = new Random();
 
-            var randomName = list[random.Next(list.ToArray().Length)];
+            var randomName = list[random.Next(list.ToArray().Length)-1];
 
             return randomName;
         }

@@ -86,6 +86,27 @@ namespace CarService.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RepairHistories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CarId = table.Column<int>(type: "int", nullable: false),
+                    RepairDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Cost = table.Column<decimal>(type: "DECIMAL(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RepairHistories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RepairHistories_Cars_CarId",
+                        column: x => x.CarId,
+                        principalTable: "Cars",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CartDetails",
                 columns: table => new
                 {
@@ -178,6 +199,11 @@ namespace CarService.DataAccess.Migrations
                 name: "IX_Details_CategoryId",
                 table: "Details",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RepairHistories_CarId",
+                table: "RepairHistories",
+                column: "CarId");
         }
 
         /// <inheritdoc />
@@ -193,10 +219,10 @@ namespace CarService.DataAccess.Migrations
                 name: "Details");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "RepairHistories");
 
             migrationBuilder.DropTable(
-                name: "Cars");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Issues");
@@ -206,6 +232,9 @@ namespace CarService.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Category");
+
+            migrationBuilder.DropTable(
+                name: "Cars");
         }
     }
 }

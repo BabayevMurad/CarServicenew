@@ -203,6 +203,30 @@ namespace CarService.DataAccess.Migrations
                     b.ToTable("Issues");
                 });
 
+            modelBuilder.Entity("CarService.Entities.RepairHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("DECIMAL(18,2)");
+
+                    b.Property<DateTime>("RepairDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.ToTable("RepairHistories");
+                });
+
             modelBuilder.Entity("CarService.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -264,6 +288,17 @@ namespace CarService.DataAccess.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CarService.Entities.RepairHistory", b =>
+                {
+                    b.HasOne("CarService.Entities.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
                 });
 
             modelBuilder.Entity("CarService.Entities.Cart", b =>
