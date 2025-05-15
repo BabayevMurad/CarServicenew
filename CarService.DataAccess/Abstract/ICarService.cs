@@ -4,7 +4,7 @@ namespace CarService.DataAccess.Abstract
 {
     public interface ICarService
     {
-        Task<Car> CarGenerator(int userId, string url);
+        Task<Car> CarGenerator(int userId);
         Task<Issue> CarIssueGenerator();
         Task<Car> CarGoService(Car car);
         Task<List<Car>> CarsInService();

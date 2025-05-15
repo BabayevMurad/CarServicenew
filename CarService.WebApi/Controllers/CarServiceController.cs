@@ -19,9 +19,9 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpGet("RandomCar")]
-        public async Task<Car> GetRandomCar(int userid, string url)
+        public async Task<Car> GetRandomCar(int userid)
         {
-            var car = await _carService.CarGenerator(userid, url);
+            var car = await _carService.CarGenerator(userid);
 
             return car;
         }

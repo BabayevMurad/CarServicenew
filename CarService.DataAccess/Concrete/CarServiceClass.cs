@@ -16,7 +16,7 @@ namespace CarService.DataAccess.Concrete
             _appRepository = appRepository;
         }
 
-        public async Task<Car> CarGenerator(int userId, string url)
+        public async Task<Car> CarGenerator(int userId)
         {
             var name = await _appDataContext.Cars.ToListAsync();
             Random random = new Random();
@@ -29,7 +29,6 @@ namespace CarService.DataAccess.Concrete
                 Name = randomName,
                 Year = randomYear,
                 UserId = userId,
-                imageUrl = url
             };
 
             return car;
