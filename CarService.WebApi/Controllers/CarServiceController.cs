@@ -27,11 +27,16 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpGet("randomissue")]
-        public Issue GetRandomIssue()
+        public async Task<Issue> GetRandomIssue()
         {
-            var issue = _carService.CarIssueGenerator();
+            var issue = await _carService.CarIssueGenerator();
 
             return issue;
+        }
+
+        public async Task AddDatabse()
+        {
+            await _carService.AddIssueToSql();
         }
 
         [HttpGet("carsinservice")]
