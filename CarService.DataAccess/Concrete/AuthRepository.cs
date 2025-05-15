@@ -58,7 +58,7 @@ namespace CarService.DataAccess.Concrete
             return user;
         }
 
-        public async Task<Admin> Register(Admin admin, string password)
+        public async Task<Admin> RegisterAdmin(Admin admin, string password)
         {
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);

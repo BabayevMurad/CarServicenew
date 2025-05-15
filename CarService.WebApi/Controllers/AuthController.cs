@@ -22,7 +22,7 @@ namespace CarService.WebApi.Controllers
             _configuration = configuration;
         }
 
-        [HttpPost("register")]
+        [HttpPost("RegisterUser")]
         public async Task<ActionResult> Register([FromBody] UserForRegisterDto dto)
         {
             if (await _authRepository.UserExists(dto.Username))
@@ -45,30 +45,30 @@ namespace CarService.WebApi.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        //[HttpPost("registerAdmin")]
-        //public async Task<ActionResult> RegisterAdmin([FromBody] UserForRegisterDto dto)
-        //{
-        //    if (await _authRepository.UserExists(dto.Username))
-        //    {
-        //        ModelState.AddModelError("Username", "Username already exist");
-        //    }
+        [HttpPost("RegisterAdmin")]
+        public async Task<ActionResult> RegisterAdmin([FromBody] AdminForRegister dto)
+        {
+            if (await _authRepository.UserExists(dto.Username))
+            {
+                ModelState.AddModelError("Username", "Username already exist");
+            }
 
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    var userToCreate = new User
-        //    {
-        //        Username = dto.Username,
-        //    };
+            var userToCreate = new User
+            {
+                Username = dto.Username,
+            };
 
-        //    await _authRepository.Register(userToCreate, dto.Password);
+            await _authRepository.Register(userToCreate, dto.Password);
 
-        //    return StatusCode(StatusCodes.Status201Created);
-        //}
+            return StatusCode(StatusCodes.Status201Created);
+        }
 
-        [HttpPost("login")]
+        [HttpPost("LoginUser")]
         public async Task<ActionResult> Login([FromBody] UserForLoginDto dto)
         {
             var user = await _authRepository.Login(dto.Username, dto.Password);
@@ -99,6 +99,40 @@ namespace CarService.WebApi.Controllers
                 token = tokenString,
                 id = user.Id,
                 username = user.Username
+            });
+        }
+
+        [HttpPost("LoginAdmin")]
+        public async Task<ActionResult> AdminLogin([FromBody] AdminForLogin dto)
+        {
+            var admin = await _authRepository.AdminLogin(dto.Username, dto.Password);
+            if (admin == null)
+            {
+                return Unauthorized();
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Token").Value);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier,admin.Id.ToString()),
+                    new Claim(ClaimTypes.Name,admin.Username)
+                }),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+            return Ok(new
+            {
+                token = tokenString,
+                id = admin.Id,
+                username = admin.Username
             });
         }
     }

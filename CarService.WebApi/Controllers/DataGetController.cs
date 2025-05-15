@@ -19,7 +19,7 @@ namespace CarService.WebApi.Controllers
             _appRepository = appRepository;
         }
 
-        [HttpGet("categorylist")]
+        [HttpGet("CategoryList")]
         public Task<List<Category>> GetCategoryList()
         {
             var categories = _appRepository.GetAllCategory();
@@ -27,7 +27,7 @@ namespace CarService.WebApi.Controllers
             return categories;
         }
 
-        [HttpGet("category/{id}")]
+        [HttpGet("Category/{id}")]
         public Task<Category> GetCategory(int id)
         {
             var category = _appRepository.GetCategory(id);
@@ -35,7 +35,7 @@ namespace CarService.WebApi.Controllers
             return category;
         }
 
-        [HttpGet("detailList")]
+        [HttpGet("DetailList")]
         public Task<List<Detail>> GetDetailList()
         {
 
@@ -44,7 +44,7 @@ namespace CarService.WebApi.Controllers
             return details;
         }
 
-        [HttpGet("detail/{id}")]
+        [HttpGet("Detail/{id}")]
         public Task<Detail> GetDetail(int id)
         {
             var detail = _appRepository.GetDetail(id);
@@ -52,7 +52,7 @@ namespace CarService.WebApi.Controllers
             return detail;
         }
 
-        [HttpGet("detailByCategory/{id}")]
+        [HttpGet("DetailByCategory/{id}")]
         public async Task<List<Detail>> DetailByCategory(int id)
         {
             var detail = await _appRepository.GetAllDetailsByCategory(id);
@@ -60,7 +60,7 @@ namespace CarService.WebApi.Controllers
             return detail;
         }
 
-        [HttpPost("adddetail")]
+        [HttpPost("AddDetail")]
         public async Task AddDetail([FromBody] AddDetailDto detailDto)
         {
             var detail = new Detail

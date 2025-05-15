@@ -34,7 +34,7 @@ namespace CarService.WebApi.Controllers
             return Ok();
         }
 
-        [HttpGet("GetCart")]
+        [HttpGet("GetCart/{id}")]
         public Task<Cart> GetCart(int id)
         {
             return _cartController.GetCart(id);

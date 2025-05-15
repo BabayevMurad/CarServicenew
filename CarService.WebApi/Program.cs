@@ -27,6 +27,7 @@ builder.Services.AddScoped<IAppRepository, AppRepository>();
 builder.Services.AddScoped<ICarService, CarServiceClass>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IService, ServiceClass>();
 
 
 
@@ -46,10 +47,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
-    builder.WithOrigins("http://localhost:5173")
-    .AllowAnyOrigin()
-    .AllowAnyHeader();
+    builder.WithOrigins("http://localhost:5173", "http://localhost:5174")
+           .AllowAnyHeader()
+           .AllowAnyMethod();
 }));
+
 
 
 var app = builder.Build();
