@@ -16,12 +16,12 @@ namespace CarService.DataAccess.Concrete
             _appRepository = appRepository;
         }
 
-        public Car CarGenerator(int userId, string url)
+        public async Task<Car> CarGenerator(int userId, string url)
         {
-            string[] name = { "Toyota Corolla", "Toyota Land Cruiser 200", "Peyserin Kolonkali Priusu", "Mercedes Benz Brabus 6.5S", "Geylerin Teslasi", "BMW X5 GPower" };
+            var name = await _appDataContext.Cars.ToListAsync();
             Random random = new Random();
  
-            string randomName = name[random.Next(name.Length)];
+            string randomName = name[random.Next(name.Count)].Name;
             int randomYear = random.Next(2020, 2025);
 
             var car = new Car
@@ -72,17 +72,32 @@ namespace CarService.DataAccess.Concrete
                 new Issue { Level= "Difficult"    , Problem= "Timing Belt Failure"   , Description= "Timing belt has broken and engine synchronization is lost."  },
                 new Issue { Level= "Difficult"    , Problem= "Fuel Pump Failure"     , Description= "Fuel pump has failed, causing fuel delivery issues."         },
                 new Issue { Level= "Difficult"    , Problem= "Clutch System Failure" , Description= "Clutch has completely failed and needs full replacement."    },
-                new Issue { Level= "Cant't Repair", Problem= "You By Old Bmw"        , Description= "This Car Never Repaired."                                    },
+                new Issue { Level= "Cant't Repair", Problem= "You Buy Old Bmw"        , Description= "This Car Never Repaired."                                    },
             };
 
             foreach (var item in list)
             {
-                var issue = await _appDataContext.Issues.FirstOrDefaultAsync(i => i.Problem == item.Problem);
-                if (issue is null)
-                {
-                    await _appDataContext.Issues.AddAsync(item);
-                }
+                await _appDataContext.Issues.AddAsync(item);
             }
+
+            await _appDataContext.SaveChangesAsync();
+        }
+
+        public async Task AddcarToSql()
+        {
+            List<Car> list = new List<Car>
+            {
+                new Car { Name= "Toyota Corolla"         , Year= 2020, imageUrl= "https://cdn.pixabay.com/photo/2015/10/12/15/00/car-984011_1280.jpg" },
+                new Car { Name= "Toyota Land Cruiser 200" , Year= 2021, imageUrl= "https://cdn.pixabay.com/photo/2016/11/29/09/08/car-1867184_1280.jpg" },
+                new Car { Name= "Mercedes Benz Brabus 6.5S", Year= 2023, imageUrl= "https://cdn.pixabay.com/photo/2016/11/29/09/08/car-1867184_1280.jpg" },
+                new Car { Name= "BMW X5 GPower"          , Year= 2025, imageUrl= "https://cdn.pixabay.com/photo/2016/11/29/09/08/car-1867184_1280.jpg" }
+            };
+            foreach (var item in list)
+            {
+                await _appDataContext.Cars.AddAsync(item);
+            }
+
+            await _appDataContext.SaveChangesAsync();
         }
 
         public async Task<List<Car>> CarsInService()
