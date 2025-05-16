@@ -58,12 +58,12 @@ namespace CarService.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userToCreate = new User
+            var adminToCreate = new Admin
             {
                 Username = dto.Username,
             };
 
-            await _authRepository.Register(userToCreate, dto.Password);
+            await _authRepository.AdminRegister(adminToCreate, dto.Password);
 
             return StatusCode(StatusCodes.Status201Created);
         }
