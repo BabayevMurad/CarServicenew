@@ -12,6 +12,7 @@ namespace CarService.DataAccess.Abstract
         Task<Car> GetCarForRepair();
         Task<Issue> GetCarIssue(int carId);
         Task CarRepairAndAddtoStock(int carId);
+        Task<decimal> GetRepairPrice(int issueId);        
         decimal GetRepairPrice(Issue issue);        
     }
 }

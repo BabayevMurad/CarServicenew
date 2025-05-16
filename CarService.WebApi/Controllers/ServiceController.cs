@@ -24,6 +24,18 @@ namespace CarService.WebApi.Controllers
              return await _service.GetCarForRepair();
         }
 
+        [HttpGet("GetCarIssue")]
+        public async Task<Issue> GetCarIssue(int carId)
+        {
+            return await _service.GetCarIssue(carId);
+        }
+
+        [HttpGet("GetRepairCost")]
+        public async Task<decimal> GetRepairCost(int id)
+        {
+            return await _service.GetRepairPrice(id);
+        }
+
         [HttpGet("RepairCar")]
         public async Task<decimal> RepairCar(int carId)
         {

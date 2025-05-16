@@ -26,7 +26,7 @@ namespace CarService.DataAccess.Concrete
             {
                 CarId = carRepair.CarId,
                 RepairDate = DateTime.Now,
-                Cost = GetRepairPrice(carRepair.Issue)
+                Cost = await GetRepairPrice(carRepair.Issue)
             });
 
             _context.CarsRepair.Remove(carRepair);
@@ -48,6 +48,28 @@ namespace CarService.DataAccess.Concrete
                 .FirstAsync();
 
             return car.Car;
+        }
+
+        public async Task<decimal> GetRepairPrice(int issueId)
+        {
+            var issue = await _context.Issues.FirstOrDefaultAsync(i => i.Id == issueId);
+
+            if (issue.Level == "Medium")
+            {
+                return (decimal)160;
+            }
+            else if (issue.Level == "Difficult")
+            {
+                return (decimal)270;
+            }
+            else if (issue.Level == "Cant't Repair")
+            {
+                return (decimal)999999999999999;
+            }
+            else
+            {
+                return (decimal)0;
+            }
         }
 
         public decimal GetRepairPrice(Issue issue)
