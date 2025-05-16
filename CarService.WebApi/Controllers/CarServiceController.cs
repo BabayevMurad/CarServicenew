@@ -47,7 +47,7 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpGet("CarsInService")]
-        public async Task<List<Car>> GetCarsInService()
+        public async Task<List<CarRepair>> GetCarsInService()
         {
             var cars = await _carService.CarsInService();
 
