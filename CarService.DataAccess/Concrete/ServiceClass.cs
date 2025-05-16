@@ -30,6 +30,8 @@ namespace CarService.DataAccess.Concrete
             });
 
             _context.CarsRepair.Remove(carRepair);
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Issue> GetCarIssue(int carId)
