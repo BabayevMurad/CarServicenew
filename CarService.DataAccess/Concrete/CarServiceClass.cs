@@ -109,11 +109,9 @@ namespace CarService.DataAccess.Concrete
             await _appDataContext.SaveChangesAsync();
         }
 
-        public async Task<List<Car>> CarsInService()
+        public async Task<List<CarRepair>> CarsInService()
         {
             var cars = await _appDataContext.CarsRepair.ToListAsync();
-
-            var returnCar = new List<Car>();
 
             foreach (var item in cars)
             {
@@ -121,10 +119,10 @@ namespace CarService.DataAccess.Concrete
 
                 car.UserId = item.UserId;
 
-                returnCar.Add(car);
+                item.Car = car;
             }
 
-            return returnCar;
+            return cars;
         }
 
         public async Task<List<Car>> GetHistory()
