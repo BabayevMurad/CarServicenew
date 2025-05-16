@@ -120,6 +120,8 @@ namespace CarService.DataAccess.Concrete
                 car.UserId = item.UserId;
 
                 item.Car = car;
+
+                await Console.Out.WriteLineAsync($"{item.UserId}");
             }
 
             return cars;
