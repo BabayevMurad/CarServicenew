@@ -1,6 +1,7 @@
 ﻿using CarService.DataAccess.Abstract;
 using CarService.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 
 namespace CarService.DataAccess.Concrete
 {
@@ -110,9 +111,16 @@ namespace CarService.DataAccess.Concrete
 
         public async Task<List<Car>> CarsInService()
         {
-            var cars = await _appDataContext.Cars.ToListAsync();
+            var cars = await _appDataContext.CarsRepair.ToListAsync();
 
-            return cars;
+            var returnCar = new List<Car>();
+
+            foreach (var item in cars)
+            {
+                returnCar.Add(item.Car);
+            }
+
+            return returnCar;
         }
 
         public Task RemoveCarFromSevice(int id)
