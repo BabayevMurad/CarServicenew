@@ -54,11 +54,11 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpPost("CarToService")]
-        public async Task<Car> CarToService([FromBody]CarRepair car)
+        public async Task<CarRepair> CarToService([FromBody]CarRepair car)
         {
             var car1 = await _carService.CarGoService(car);
 
-            return car1.Car;
+            return car1;
         }
 
         [HttpDelete("RemoveCarFromService/{id}")]
