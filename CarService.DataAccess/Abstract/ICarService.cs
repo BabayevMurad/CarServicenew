@@ -7,7 +7,7 @@ namespace CarService.DataAccess.Abstract
         Task<Car> CarGenerator(int userId);
         Task<Issue> CarIssueGenerator();
         Task<CarRepair> CarGoService(CarRepair car);
-        Task<List<Car>> CarsInService();
+        Task<List<CarRepair>> CarsInService();
         Task RemoveCarFromSevice(int id);
         Task AddIssueToSql();
         Task AddcarToSql();
