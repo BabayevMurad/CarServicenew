@@ -61,13 +61,16 @@ namespace CarService.WebApi.Controllers
 
             var issueAdd = await _carService.GetIssueById(car.IssueId);
 
+            carAdd.UserId = car.UserId;
+
             var newRapair = new CarRepair
             {
                 CarId = carAdd.Id,
                 Car = carAdd,
                 IssueId = issueAdd.Id,
                 Issue = issueAdd,
-                DateTime = DateTime.Now
+                DateTime = DateTime.Now,
+                UserId = car.UserId,
             };
 
             var car1 = await _carService.CarGoService(newRapair);

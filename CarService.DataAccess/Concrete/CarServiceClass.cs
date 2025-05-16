@@ -117,7 +117,11 @@ namespace CarService.DataAccess.Concrete
 
             foreach (var item in cars)
             {
-                returnCar.Add(item.Car);
+                var car = await _appDataContext.Cars.FirstOrDefaultAsync(c => c.Id == item.CarId);
+
+                car.UserId = item.UserId;
+
+                returnCar.Add(car);
             }
 
             return returnCar;
@@ -129,6 +133,10 @@ namespace CarService.DataAccess.Concrete
             var returnCar = new List<Car>();
             foreach (var item in cars)
             {
+                var car = await _appDataContext.Cars.FirstOrDefaultAsync(c => c.Id == item.CarId);
+
+                car.UserId = item.Car.UserId;
+
                 returnCar.Add(item.Car);
             }
             return returnCar;

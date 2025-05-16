@@ -14,5 +14,6 @@ namespace CarService.Entities
         public virtual Car Car { get; set; }
         public int IssueId { get; set; }
         public virtual Issue Issue { get; set; }
-    }
+        public int UserId { get; set; }
+}
 }
