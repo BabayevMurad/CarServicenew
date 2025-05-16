@@ -128,7 +128,7 @@ namespace CarService.DataAccess.Concrete
             return car;
         }
 
-        public async Task<Issue> GetIssueByID(int id)
+        public async Task<Issue> GetIssueById(int id)
         {
             var issue = await _appDataContext.Issues.FirstOrDefaultAsync(i => i.Id == id);
             return issue;

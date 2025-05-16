@@ -64,7 +64,9 @@ namespace CarService.WebApi.Controllers
             var newRapair = new CarRepair
             {
                 CarId = carAdd.Id,
+                Car = carAdd,
                 IssueId = issueAdd.Id,
+                Issue = issueAdd,
                 DateTime = DateTime.Now
             };
 
