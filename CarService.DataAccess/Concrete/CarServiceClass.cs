@@ -46,6 +46,8 @@ namespace CarService.DataAccess.Concrete
         {
             var carReturn = await _appDataContext.CarsRepair.AddAsync(car);
 
+            await _appDataContext.SaveChangesAsync();
+
             return carReturn.Entity;
         }
 
@@ -118,6 +120,18 @@ namespace CarService.DataAccess.Concrete
             var task = _appRepository.DeleteAsync(_appDataContext.Cars.FirstOrDefault(c => c.Id == id));
 
             return task;
+        }
+
+        public async Task<Car> GetCarById(int id)
+        {
+            var car = await _appDataContext.Cars.FirstOrDefaultAsync(c => c.Id == id);
+            return car;
+        }
+
+        public async Task<Issue> GetIssueByID(int id)
+        {
+            var issue = await _appDataContext.Issues.FirstOrDefaultAsync(i => i.Id == id);
+            return issue;
         }
     }
 }

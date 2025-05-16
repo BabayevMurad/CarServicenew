@@ -1,5 +1,6 @@
 ﻿using CarService.DataAccess.Abstract;
 using CarService.Entities;
+using CarService.Entities.Dto_s;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -54,9 +55,20 @@ namespace CarService.WebApi.Controllers
         }
 
         [HttpPost("CarToService")]
-        public async Task<CarRepair> CarToService([FromBody]CarRepair car)
+        public async Task<CarRepair> CarToService([FromBody]CarRepairDto car)
         {
-            var car1 = await _carService.CarGoService(car);
+            var carAdd = await _carService.GetCarById(car.CarId);
+
+            var issueAdd = await _carService.GetIssueById(car.IssueId);
+
+            var newRapair = new CarRepair
+            {
+                CarId = carAdd.Id,
+                IssueId = issueAdd.Id,
+                DateTime = DateTime.Now
+            };
+
+            var car1 = await _carService.CarGoService(newRapair);
 
             return car1;
         }
