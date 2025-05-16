@@ -20,7 +20,7 @@ namespace CarService.DataAccess.Concrete
 
         public async Task CarRepairAndAddtoStock(int carRepairId)
         {
-            var carRepair = await _context.CarsRepair.FirstOrDefaultAsync(c => c.Id == carRepairId);
+            var carRepair = await _context.CarsRepair.FirstOrDefaultAsync(c => c.CarId == carRepairId);
 
             _context.RepairHistories.Add(new RepairHistory
             {
