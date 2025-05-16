@@ -80,5 +80,12 @@ namespace CarService.WebApi.Controllers
         {
             return _carService.RemoveCarFromSevice(id);
         }
+
+        [HttpGet("GetCarHistory")]
+        public async Task<List<Car>> GetCarHistory()
+        {
+            var cars = await _carService.GetHistory();
+            return cars;
+        }
     }
 }
