@@ -13,5 +13,6 @@ namespace CarService.DataAccess.Abstract
         Task AddcarToSql();
         Task<Car> GetCarById(int id);
         Task<Issue> GetIssueById(int id);
+        Task<List<Car>> GetHistory();
     }
 }

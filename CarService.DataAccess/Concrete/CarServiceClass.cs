@@ -123,6 +123,17 @@ namespace CarService.DataAccess.Concrete
             return returnCar;
         }
 
+        public async Task<List<Car>> GetHistory()
+        {
+            var cars = await _appDataContext.RepairHistories.ToListAsync();
+            var returnCar = new List<Car>();
+            foreach (var item in cars)
+            {
+                returnCar.Add(item.Car);
+            }
+            return returnCar;
+        }
+
         public Task RemoveCarFromSevice(int id)
         {
             var task = _appRepository.DeleteAsync(_appDataContext.Cars.FirstOrDefault(c => c.Id == id));
