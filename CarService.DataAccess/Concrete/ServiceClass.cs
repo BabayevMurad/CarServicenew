@@ -26,7 +26,7 @@ namespace CarService.DataAccess.Concrete
             {
                 CarId = carRepair.CarId,
                 RepairDate = DateTime.Now,
-                Cost = await GetRepairPrice(carRepair.Issue)
+                Cost = GetRepairPrice(carRepair.Issue)
             });
 
             _context.CarsRepair.Remove(carRepair);
