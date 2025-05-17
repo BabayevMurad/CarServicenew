@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarService.DataAccess.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20250515201224_init")]
+    [Migration("20250517172712_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -90,6 +90,9 @@ namespace CarService.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IssueId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

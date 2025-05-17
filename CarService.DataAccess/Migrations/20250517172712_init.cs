@@ -176,7 +176,8 @@ namespace CarService.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CarId = table.Column<int>(type: "int", nullable: false),
-                    IssueId = table.Column<int>(type: "int", nullable: false)
+                    IssueId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

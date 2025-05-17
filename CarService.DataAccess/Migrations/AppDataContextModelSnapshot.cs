@@ -89,6 +89,9 @@ namespace CarService.DataAccess.Migrations
                     b.Property<int>("IssueId")
                         .HasColumnType("int");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CarId");

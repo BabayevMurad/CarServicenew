@@ -39,6 +39,10 @@ namespace CarService.DataAccess
             modelBuilder.Entity<RepairHistory>()
                 .Property(r => r.Cost)
                 .HasColumnType("DECIMAL(18,2)");
+
+            modelBuilder.Entity<CarRepair>()
+                .Property(c => c.UserId)
+                .HasColumnName("UserId");
         }
     }
 }
