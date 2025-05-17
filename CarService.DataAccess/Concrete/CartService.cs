@@ -25,6 +25,11 @@ namespace CarService.DataAccess.Concrete
 
                 detail.Count -= item.Count;
 
+                if (detail.Count <= 0)
+                {
+                    _context.Details.Remove(detail);
+                }
+
                 item.CartId = id;
             }
 
