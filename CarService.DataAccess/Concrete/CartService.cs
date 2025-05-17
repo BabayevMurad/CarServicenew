@@ -27,7 +27,9 @@ namespace CarService.DataAccess.Concrete
 
                 if (detail.Count <= 0)
                 {
-                    _context.Details.Remove(detail);
+                   await _appRepository.DeleteAsync(detail);
+
+                    await _context.SaveChangesAsync();
                 }
 
                 item.CartId = id;
